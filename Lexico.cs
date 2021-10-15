@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Compiler
+namespace Compilador2
 {
     public class Lexico
     {
@@ -25,6 +25,7 @@ namespace Compiler
 
             var state = 0;
             var termo = "";
+            char temp;
             Token token = new Token();
             
             while (true)
@@ -59,6 +60,12 @@ namespace Compiler
                                 termo += caractere;
                                 break;
                             case 7:
+                                state = 7;
+                                break;
+                            case 8:
+                                state = 8;
+                                break;
+                            case 10:
                                 state = 0;
                                 termo += caractere;
                                 break;
@@ -139,7 +146,7 @@ namespace Compiler
                     case 6:
                         if (GetTipo(caractere) == 6)
                         {
-                            state = 7;
+                            state = 10;
                             termo += caractere;
                             break;
                         }
@@ -150,6 +157,25 @@ namespace Compiler
 
                         return token;
                     case 7:
+                        if (caractere != '}')
+                            state = 7;
+                        else
+                            state = 0;
+                        break;
+                    
+                    case 8:
+                        if (GetTipo(caractere) == 9)
+                        {
+                            NextChar();
+                            state = 0;
+                        }
+                        else
+                        {
+                            state = 8;
+                        }
+                        
+                        break;
+                    case 10:
                         token.Tipo = TokenTipo.Symbol;
                         token.Termo = termo;
                         PreviousPos();
@@ -183,8 +209,17 @@ namespace Compiler
             if (caractere == '=' || caractere == '>')
                 return 6;
 
-            if (listaSimbolos.Contains(caractere))
+            if (caractere == '{')
                 return 7;
+
+            if (caractere == '/' && VerifyNextChar() == '*')
+                return 8;
+            
+            if (caractere == '*' && VerifyNextChar() == '/')
+                return 9;
+            
+            if (listaSimbolos.Contains(caractere))
+                return 10;
 
             return -1;
         }
@@ -210,6 +245,13 @@ namespace Compiler
         private bool IsEndOfFile()
         {
             return Pos >= Content.Length;
+        }
+
+        private char VerifyNextChar()
+        {
+            if (Pos > Content.Length)
+                return '0';
+            return Content[Pos];
         }
     }
 }

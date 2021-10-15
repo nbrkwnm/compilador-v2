@@ -1,4 +1,4 @@
-﻿namespace Compiler
+﻿namespace Compilador2
 {
     public enum TokenTipo
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualBasic.FileIO;
 
-namespace Compiler
+namespace Compilador2
 {
     public class Compilador
     {
@@ -14,6 +14,9 @@ namespace Compiler
             {
                 Console.WriteLine(linha);
             }
+
+            Interpretador interpretador = new Interpretador(sintatico.CodigoFormatado);
+            interpretador.Interpretar();
         }
     }
 }
