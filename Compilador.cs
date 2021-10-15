@@ -7,7 +7,7 @@ namespace Compilador2
     {
         static void Main(string[] args)
         {
-            Sintatico sintatico = new Sintatico("exemplo.lalg.txt");
+            Sintatico sintatico = new Sintatico("correto2.lalg.txt");
             sintatico.Analisar();
 
             foreach (var linha in sintatico.CodigoFormatado)

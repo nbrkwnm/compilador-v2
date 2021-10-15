@@ -1,3 +1,7 @@
+Especificação da Sintaxe da Linguagem LALG
+- Comentários na LALG: entre { } ou /* */
+
+
 <programa> -> program ident <corpo> .
 <corpo> -> <dc> begin <comandos> end
 <dc> -> <dc_v> <mais_dc>  | λ
@@ -12,7 +16,8 @@
 <comando> -> read (ident) |
 							write (ident) |
 							ident := <expressao> |
-							if <condicao> then <comandos> <pfalsa> $
+							if <condicao> then <comandos> <pfalsa> $ |
+							while <condicao> do <comandos> $
 							
 <condicao> -> <expressao> <relacao> <expressao>
 <relacao> -> = | <> | >= | <= | > | <
